@@ -56,7 +56,71 @@ The key's randomart image is:
 [ec2-user@ip-172-31-23-20 ~]$ ls .ssh/
 authorized_keys  id_rsa  id_rsa.pub
 ```
-5. aws cliをインストール
+5. aws cliのインストールと初期設定
+    
+    5.1 Python 3 および pip ツールをインストール
+    ```
+    [ec2-user@ip-172-31-23-20 ~]$ sudo yum install python3
+    ```
 
-6. 
+    5.2 pip コマンドを使用して、AWS コマンドラインツール をインストール
+    
+    * awscliインストール
+    ```
+    [ec2-user@ip-172-31-23-20 ~]$ sudo pip3 install awscli
+    ```
+    
+    * AWS CLI をインストールできたことを確認
+    ```
+    [ec2-user@ip-172-31-23-20 ~]$  aws --version
+    aws-cli/1.22.82 Python/3.6.8 Linux/4.18.0-348.12.2.el8_5.x86_64 botocore/1.24.27
+    ```
+    
+    5.3 アクセスキーの作成
+    * アクセスキーを作成するためのポリシーを作成
+    今回は「CreateOwnAccessKeys」というポリシーを作成しました。
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "CreateOwnAccessKeys",
+            "Effect": "Allow",
+            "Action": [
+                "iam:CreateAccessKey",
+                "iam:GetUser",
+                "iam:ListAccessKeys"
+            ],
+            "Resource": "arn:aws:iam::*:user/${aws:username}"
+        }
+    ]
+}
+```
+
+    * 作成したポリシーをアタッチ
+    
+    ![image](https://user-images.githubusercontent.com/95552593/160240504-e76139ba-8f6a-4440-aa0b-11a14beff7f8.png)
+
+
+    
+    [IAM ユーザーのアクセスキーの管理](https://docs.aws.amazon.com/ja_jp/IAM/latest/UserGuide/id_credentials_access-keys.html)
+    
+    * アクセスキーの作成
+    ![アクセスキーの作成前](https://user-images.githubusercontent.com/95552593/160239470-d6cc2f28-7574-4dd1-a984-925719ba83f5.png)
+
+    
+6. AWS CLIを実行するユーザ(ローカル環境)に、以下のポリシーを持っていることを確認する:
+```
+AmazonEC2FullAccess
+AmazonRoute53FullAccess
+AmazonS3FullAccess
+IAMFullAccess
+AmazonVPCFullAccess
+```
+
+    今回は「AdministratorAccess」ポリシーを付与しています。
+    ![AdministratorAccess](https://user-images.githubusercontent.com/95552593/160238956-1931be5f-0cd0-4622-921d-ec9de67e9505.png) 
+    
+7. kops用のS3バケットの作成
+8. 
 
