@@ -77,36 +77,34 @@ authorized_keys  id_rsa  id_rsa.pub
     ```
     
     5.3 アクセスキーの作成
+        [IAM ユーザーのアクセスキーの管理](https://docs.aws.amazon.com/ja_jp/IAM/latest/UserGuide/id_credentials_access-keys.html)
     * アクセスキーを作成するためのポリシーを作成
     今回は「CreateOwnAccessKeys」というポリシーを作成しました。
-```
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Sid": "CreateOwnAccessKeys",
-            "Effect": "Allow",
-            "Action": [
-                "iam:CreateAccessKey",
-                "iam:GetUser",
-                "iam:ListAccessKeys"
-            ],
-            "Resource": "arn:aws:iam::*:user/${aws:username}"
-        }
-    ]
-}
-```
+    ```
+    {
+        "Version": "2012-10-17",
+        "Statement": [
+            {
+                "Sid": "CreateOwnAccessKeys",
+                "Effect": "Allow",
+                "Action": [
+                    "iam:CreateAccessKey",
+                    "iam:GetUser",
+                    "iam:ListAccessKeys"
+                ],
+                "Resource": "arn:aws:iam::*:user/${aws:username}"
+            }
+        ]
+    }
+    ```
 
     * 作成したポリシーをアタッチ
-    
-    ![image](https://user-images.githubusercontent.com/95552593/160240504-e76139ba-8f6a-4440-aa0b-11a14beff7f8.png)
-
-
-    
-    [IAM ユーザーのアクセスキーの管理](https://docs.aws.amazon.com/ja_jp/IAM/latest/UserGuide/id_credentials_access-keys.html)
+    ![CreateOwnAccessKeysのアタッチ](https://user-images.githubusercontent.com/95552593/160240611-7a22f8bf-02e6-425b-9dee-881c8fe49a53.png)
     
     * アクセスキーの作成
-    ![アクセスキーの作成前](https://user-images.githubusercontent.com/95552593/160239470-d6cc2f28-7574-4dd1-a984-925719ba83f5.png)
+    ![アクセスキーの作成](https://user-images.githubusercontent.com/95552593/160240924-6f9ac34c-6a8c-4882-9e28-43cb5e62ef4e.png)
+
+
 
     
 6. AWS CLIを実行するユーザ(ローカル環境)に、以下のポリシーを持っていることを確認する:
